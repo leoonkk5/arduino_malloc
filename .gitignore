@@ -1,0 +1,13 @@
+# Ignore all Unix executables (common pattern)
+*.out
+*.exe
+*.elf
+
+# Ignore all macOS dynamic libraries
+*.dylib
+
+# Ignore all Linux shared libraries
+*.so
+
+# ignore Windows dynamic libraries
+*.dll
