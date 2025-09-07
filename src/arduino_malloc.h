@@ -1,6 +1,10 @@
 #pragma once
 #include <stddef.h>
 #include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @file arduino_malloc.h
  * @brief Lightweight memory allocator for Arduino projects.
@@ -71,3 +75,7 @@ void *calloc(size_t nelems, size_t size);
  * @endcode
  */
 void *realloc(void *ptr, size_t new_size);
+
+#ifdef __cplusplus
+}
+#endif
