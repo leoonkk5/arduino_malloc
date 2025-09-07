@@ -58,6 +58,7 @@ static inline size_t _find_free_index(size_t nblocks)
 {   
     size_t seq_carry = 0;   // Consecutive free blocks carried from previous bytes
     size_t seq_start = 0;   // Index of the first block in the current candidate sequence.
+    
     for(size_t i = 0; i < BITMAP_SIZE; i++) 
     {   
         uint8_t current  = bitmap[i];

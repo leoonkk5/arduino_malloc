@@ -8,7 +8,7 @@
  * This header provides an abstraction layer for the actual memory allocation
  * implementation. By using `_internal_allocate` and `_internal_free`, the
  * frontend allocator (e.g., `malloc`, `free`) can remain unchanged while
- * using different backend implementations (bitmap, pool, guarded, etc.).
+ * using different backend implementations (bitmap, pool, etc.).
  *
  * Currently uses:
  * - One-level bitmap allocator (`_1l_bm_allocate` / `_1l_bm_free`)

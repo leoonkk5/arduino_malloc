@@ -4,10 +4,10 @@
 
 /**
  * @file 1l_bm_allocator.h
- * @brief Raw single-level bitmap-based memory allocator.
+ * @brief Single-level bitmap-based memory allocator.
  *
  * Provides low-level allocation/free functions for managing
- * a fixed heap. Does not provide headers, canaries, or debug checks.
+ * a fixed heap. 
  */
 static void *_1l_bm_allocate(size_t size);
 static void  _1l_bm_free(void *ptr, size_t size);
