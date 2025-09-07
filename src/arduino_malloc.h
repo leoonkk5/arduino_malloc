@@ -30,7 +30,7 @@ extern "C" {
  *
  * Example:
  * @code
- * uint8_t* buffer = (uint8_t*)bm_malloc(32);
+ * uint8_t* buffer = (uint8_t*)ar_malloc(32);
  * if(buffer) { ..use buffer  }
  * @endcode
  */
@@ -43,7 +43,7 @@ void *ar_malloc(size_t size);
  *
  * Example:
  * @code
- * bm_free(buffer);
+ * ar_free(buffer);
  * @endcode
  */
 void ar_free(void *ptr);
@@ -57,7 +57,7 @@ void ar_free(void *ptr);
  *
  * Example:
  * @code
- * uint8_t* bitmap = (uint8_t*)bm_calloc(128, sizeof(uint8_t));
+ * uint8_t* bitmap = (uint8_t*)ar_calloc(128, sizeof(uint8_t));
  * @endcode
  */
 void *ar_calloc(size_t nelems, size_t size);
@@ -71,7 +71,7 @@ void *ar_calloc(size_t nelems, size_t size);
  *
  * Example:
  * @code
- * buffer = (uint8_t*)bm_realloc(buffer, 2048);
+ * buffer = (uint8_t*)ar_realloc(buffer, 2048);
  * @endcode
  */
 void *ar_realloc(void *ptr, size_t new_size);
