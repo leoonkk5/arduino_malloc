@@ -12,5 +12,4 @@
 
 # ignore Windows dynamic libraries
 *.dll
-
-.build/
+**/build/
