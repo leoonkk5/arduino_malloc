@@ -5,7 +5,7 @@
 
 # Ignore all macOS dynamic libraries
 *.dylib
-*.dSYM/ 
+.dSYM/ 
 
 # Ignore all Linux shared libraries
 *.so
@@ -13,4 +13,4 @@
 # ignore Windows dynamic libraries
 *.dll
 
-*.build/
+.build/
