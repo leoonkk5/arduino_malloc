@@ -44,5 +44,16 @@ void *calloc(size_t nelems, size_t size)
 
 void *realloc(void *ptr, size_t new_size) 
 {
-    return NULL;  // Todo: implement
+    if(!ptr) return malloc(new_size);
+    AllocHeader *header = (AllocHeader*)ptr - 1;
+    if(header->allocation_size == new_size) return ptr;
+
+    uint8_t *new_ptr = malloc(new_size);
+    if(!new_ptr) return NULL;
+
+    size_t copy_size = header->allocation_size < new_size ? header->allocation_size : new_size;
+    memcpy(new_ptr, ptr, copy_size);
+
+    free(ptr);
+    return new_ptr;
 }

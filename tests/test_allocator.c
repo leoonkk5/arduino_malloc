@@ -48,9 +48,6 @@ void test_calloc() {
 }
 
 void test_realloc() {
-    // TODO: implement realloc.
-
-    /*
     printf("=== Test: realloc ===\n");
 
     uint8_t* ptr = (uint8_t*) malloc(16);
@@ -70,7 +67,6 @@ void test_realloc() {
 
     printf("Reallocated 16 bytes -> 32 bytes at %p (old was %p)\n", new_ptr, ptr);
     free(new_ptr);
-    */
 }
 
 void test_heap_exhaustion() {

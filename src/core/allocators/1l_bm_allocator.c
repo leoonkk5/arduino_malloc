@@ -30,7 +30,8 @@ static inline size_t _find_small_free_index(size_t nblocks, size_t byte_idx, uin
 {
     size_t shift = 1;
     size_t rem   = nblocks;
-    b = ~b; // Look for sequences of ones, not zeroes.
+    
+    b = ~b; // The following loop checks sequences of ones, not zeroes. so negate b.
 
     /*  
      * Bit-hack to find a contiguous sequence of `nblocks` free bits within the byte
