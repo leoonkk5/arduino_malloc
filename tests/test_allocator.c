@@ -11,16 +11,16 @@ uint8_t *heap = heap_data;
 void test_malloc_free() {
     printf("=== Test: malloc & free ===\n");
 
-    void* a = malloc(8);
-    void* b = malloc(8);
+    void* a = ar_malloc(8);
+    void* b = ar_malloc(8);
 
     assert(a != NULL && b != NULL);
     assert(a != b); 
-    free(a);
-    free(b);
+    ar_free(a);
+    ar_free(b);
 
     // Try allocating 64 bytes
-    uint8_t* ptr = (uint8_t*)malloc(64);
+    uint8_t* ptr = (uint8_t*)ar_malloc(64);
     assert(ptr != NULL);  // If this fails.
     printf("Allocated 64 bytes at %p\n", ptr);
 
@@ -28,14 +28,14 @@ void test_malloc_free() {
     memset(ptr, 0xAA, 64);
 
     // Free it
-    free(ptr);
+    ar_free(ptr);
     printf("Freed 64 bytes at %p\n", ptr);
 }
 
 void test_calloc() {
     printf("=== Test: calloc ===\n");
 
-    uint8_t* ptr = (uint8_t*) calloc(10, sizeof(uint8_t));
+    uint8_t* ptr = (uint8_t*) ar_calloc(10, sizeof(uint8_t));
     assert(ptr != NULL);
 
     // Check that memory is zeroed
@@ -44,20 +44,20 @@ void test_calloc() {
     }
 
     printf("calloc allocated and zeroed 10 bytes at %p\n", ptr);
-    free(ptr);
+    ar_free(ptr);
 }
 
 void test_realloc() {
     printf("=== Test: realloc ===\n");
 
-    uint8_t* ptr = (uint8_t*) malloc(16);
+    uint8_t* ptr = (uint8_t*) ar_malloc(16);
     assert(ptr != NULL);
 
     // Fill memory with pattern
     memset(ptr, 0x55, 16);
 
     // Reallocate to bigger size (let's see if we survive)
-    uint8_t* new_ptr = (uint8_t*) realloc(ptr, 32);
+    uint8_t* new_ptr = (uint8_t*) ar_realloc(ptr, 32);
     assert(new_ptr != NULL);
 
     // Check old data is preserved
@@ -66,7 +66,7 @@ void test_realloc() {
     }
 
     printf("Reallocated 16 bytes -> 32 bytes at %p (old was %p)\n", new_ptr, ptr);
-    free(new_ptr);
+    ar_free(new_ptr);
 }
 
 void test_heap_exhaustion() {
@@ -77,7 +77,7 @@ void test_heap_exhaustion() {
     int count = 0;
 
     while (1) {
-        void* ptr = malloc(8);
+        void* ptr = ar_malloc(8);
         if (!ptr) break; 
         blocks[count++] = ptr;
     }
@@ -86,7 +86,7 @@ void test_heap_exhaustion() {
 
     // Free all blocks
     for (int i = 0; i < count; i++) {
-        free(blocks[i]);
+        ar_free(blocks[i]);
     }
 
     printf("Freed all blocks after exhaustion test\n");

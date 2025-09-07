@@ -15,10 +15,10 @@ extern "C" {
  * without the massive memory overhead made by many other allocators.
  *
  * Functions included:
- * - malloc:    allocate memory
- * - free:      free memory allocated by bm_malloc
- * - calloc:    allocate and zero-initialize memory
- * - realloc:   resize previously allocated memory
+ * - ar_malloc:    allocate memory
+ * - ar_free:      free memory allocated by bm_malloc
+ * - ar_calloc:    allocate and zero-initialize memory
+ * - ar_realloc:   resize previously allocated memory
  */
 
 
@@ -34,7 +34,7 @@ extern "C" {
  * if(buffer) { ..use buffer  }
  * @endcode
  */
-void *malloc(size_t size);
+void *ar_malloc(size_t size);
 
 /**
  * @brief Free previously allocated memory.
@@ -46,7 +46,7 @@ void *malloc(size_t size);
  * bm_free(buffer);
  * @endcode
  */
-void free(void *ptr);
+void ar_free(void *ptr);
 
 /**
  * @brief Allocate memory for an array and initialize all bytes to zero.
@@ -60,7 +60,7 @@ void free(void *ptr);
  * uint8_t* bitmap = (uint8_t*)bm_calloc(128, sizeof(uint8_t));
  * @endcode
  */
-void *calloc(size_t nelems, size_t size);
+void *ar_calloc(size_t nelems, size_t size);
 
 /**
  * @brief Resize a previously allocated memory block.
@@ -74,7 +74,7 @@ void *calloc(size_t nelems, size_t size);
  * buffer = (uint8_t*)bm_realloc(buffer, 2048);
  * @endcode
  */
-void *realloc(void *ptr, size_t new_size);
+void *ar_realloc(void *ptr, size_t new_size);
 
 #ifdef __cplusplus
 }

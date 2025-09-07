@@ -9,7 +9,7 @@ typedef struct
     size_t allocation_size; 
 }AllocHeader;
 
-void *malloc(size_t size)
+void *ar_malloc(size_t size)
 {
     if(size == 0) size = 1;  // Ensure we allocate at least 1 byte
 
@@ -24,7 +24,7 @@ void *malloc(size_t size)
     return header + 1; // Return a pointer to the memory just after the header (user memory)
 }
 
-void free(void *ptr)
+void ar_free(void *ptr)
 {   
     if(!ptr) return;
     // Retrieve the header located just before the user memory
@@ -34,26 +34,26 @@ void free(void *ptr)
     _internal_free((void*)header, header->allocation_size);
 }
 
-void *calloc(size_t nelems, size_t size) 
+void *ar_calloc(size_t nelems, size_t size) 
 {
     size_t bytes = nelems * size;
-    uint8_t *ptr = malloc(bytes);
+    uint8_t *ptr = ar_malloc(bytes);
     memset(ptr, 0, bytes);
     return ptr;
 }
 
-void *realloc(void *ptr, size_t new_size) 
+void *ar_realloc(void *ptr, size_t new_size) 
 {
-    if(!ptr) return malloc(new_size);
+    if(!ptr) return ar_malloc(new_size);
     AllocHeader *header = (AllocHeader*)ptr - 1;
     if(header->allocation_size == new_size) return ptr;
 
-    uint8_t *new_ptr = malloc(new_size);
+    uint8_t *new_ptr = ar_malloc(new_size);
     if(!new_ptr) return NULL;
 
     size_t copy_size = header->allocation_size < new_size ? header->allocation_size : new_size;
     memcpy(new_ptr, ptr, copy_size);
 
-    free(ptr);
+    ar_free(ptr);
     return new_ptr;
 }

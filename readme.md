@@ -1,7 +1,7 @@
 # Arduino Lightweight Memory Allocator
 
 A lightweight, configurable memory allocator for **Arduino** projects.
-This library provides a familiar **`malloc`**, **`free`**, **`calloc`**, and **`realloc`** interface on top of custom backends optimized for small embedded systems.
+This library provides a familiar **`ar_malloc`**, **`ar_free`**, **`ar_calloc`**, and **`ar_realloc`** interface on top of custom backends optimized for small embedded systems.
 
 Unlike the default AVR **`malloc`**, this allocator avoids large runtime overheads and makes it easier to experiment with different allocation strategies (e.g., bitmap allocator, pool allocator, guarded allocator).
 
@@ -17,7 +17,7 @@ Unlike the default AVR **`malloc`**, this allocator avoids large runtime overhea
 ## Project Structure
 
 - **`src/ arduino_malloc.h` / `arduino_malloc.c`:**
-Public API (**`malloc`**, **`free`**, **`calloc`**, **`realloc`**.). Adds small headers to track allocation sizes.
+Public API (**`ar_malloc`**, **`ar_free`**, **`ar_calloc`**, **`ar_realloc`**.). Adds small headers to track allocation sizes.
 
 - **`src/core/internal_allocator.h`:** Dispatch layer that forwards allocation requests to the chosen backend.
 
@@ -41,25 +41,25 @@ Utility functions used by the backend. (e.g., bit manipulation like **`ctzb`** a
 void setup() {
     Serial.begin(9600);
 
-    uint8_t* buffer = (uint8_t*) malloc(64);
+    uint8_t* buffer = (uint8_t*) ar_malloc(64);
     if (buffer) {
         Serial.println("Allocated 64 bytes!");
-        free(buffer);
+        ar_free(buffer);
     }
 }
 
 void loop() {
-    char *text = (char*)malloc(10);
-    free(text);
+    char *text = (char*)ar_malloc(10);
+    ar_free(text);
 }
 ```
 
 
 ## Current Status
-- malloc
-- free
-- calloc
-- realloc (to be implemented)
+- ar_malloc
+- ar_free
+- ar_calloc
+- ar_realloc
 - One-level bitmap allocator backend
 - Additional backends (to be implemented)
 
@@ -75,10 +75,10 @@ This allows unit testing without uploading to Arduino hardware.
 
 ### Example Output (Uno, 512B heap):
 ```cpp
-void *ptr1 = malloc(32)  -> success
-void *ptr2 = malloc(64)  -> success
-free(ptr1)               -> freed
-void *ptr3 = malloc(512) -> fails (not enough blocks)
+void *ptr1 = ar_malloc(32)  -> success
+void *ptr2 = ar_malloc(64)  -> success
+ar_free(ptr1)               -> freed
+void *ptr3 = ar_malloc(512) -> fails (not enough blocks)
 ```
 
 
