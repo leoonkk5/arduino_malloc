@@ -4,7 +4,12 @@
 #include "../heap.h"
 #include "../utils.h"
 
-#define BLOCK_SIZE  (sizeof(max_align_t))    // aligned to max_align_t
+#ifdef ARDUINO
+    #define BLOCK_SIZE  (4)
+#else
+    #define BLOCK_SIZE  (sizeof(max_align_t))    // aligned to max_align_t
+#endif
+
 #define BLOCK_COUNT  (HEAP_SIZE / BLOCK_SIZE)
 
 #define BLOCKS_NEEDED(bytes) (((bytes) + (BLOCK_SIZE) - 1) / (BLOCK_SIZE))
