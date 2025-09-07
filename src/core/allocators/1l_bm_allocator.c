@@ -111,9 +111,6 @@ static inline size_t _find_free_index(size_t nblocks)
  */
 static void _set_sequence(size_t idx, size_t count, uint8_t value)
 {
-    if (idx >= BLOCK_COUNT) return;                  // Out-of-bounds, do nothing
-    if (idx + count > BLOCK_COUNT) count = BLOCK_COUNT - idx; // Clamp to heap size
-
     while (count > 0)
     {
         size_t byte_idx     = idx / 8;      // Which byte in the bitmap
@@ -149,6 +146,7 @@ void *_1l_bm_allocate(size_t size)
     }
 
     size_t idx = _find_free_index(nblocks);
+    if(idx + nblocks >= BLOCK_COUNT) return NULL;
 
     // No free sequence found, return NULL.
     if (idx == (size_t)-1 || idx + nblocks > BLOCK_COUNT) 
