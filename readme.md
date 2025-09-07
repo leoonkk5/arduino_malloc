@@ -31,6 +31,43 @@ Defines heap parameters (**`HEAP_SIZE`**, **`HEAP_START`**) and abstracts Arduin
 Utility functions used by the backend. (e.g., bit manipulation like **`ctzb`** and **`clzb`**).
 
 
+## Installation (Arduino IDE)
+
+### Easiest Way: Add ZIP via Arduino IDE
+
+**1:** Download the library ZIP from GitHub (use the green “Code → Download ZIP” button).
+
+**2:** Open **Arduino IDE** -> go to **Sketch** -> **Include Library** -> **Add .ZIP Library...**
+
+**3:** Select the ZIP file you just downloaded.
+
+**4:** Include it in your sketch:
+```cpp
+#include "arduino_malloc.h"
+```
+
+### Alternative: Manual Installation
+
+**1:** Clone or download the repo:
+```bash
+git clone https://github.com/yourusername/arduino-lightweight-malloc.git
+```
+
+**2:** Move the library folder to your Arduino libraries directory:
+
+Windows: **`Documents/Arduino/libraries/`**
+
+macOS: **`~/Documents/Arduino/libraries/`**
+
+Linux: **`~/Arduino/libraries/`**
+
+**3:** Include it in your sketch:
+```cpp
+#include "arduino_malloc.h"
+```
+
+
+
 ## Getting Started
 ### 1. Include the allocator
 ```cpp
