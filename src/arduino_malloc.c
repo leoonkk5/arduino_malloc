@@ -1,6 +1,7 @@
 // arduino_malloc.c
 #include "arduino_malloc.h"
 #include <stddef.h>
+#include <string.h> // For memset.
 
 typedef struct 
 {
@@ -34,7 +35,10 @@ void free(void *ptr)
 
 void *calloc(size_t nelems, size_t size) 
 {
-    return NULL; // Todo: implement
+    size_t bytes = nelems * size;
+    uint8_t *ptr = malloc(bytes);
+    memset(ptr, 0, bytes);
+    return ptr;
 }
 
 void *realloc(void *ptr, size_t new_size) 
