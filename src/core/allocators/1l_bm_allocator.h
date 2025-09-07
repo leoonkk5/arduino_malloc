@@ -9,5 +9,5 @@
  * Provides low-level allocation/free functions for managing
  * a fixed heap. 
  */
-static void *_1l_bm_allocate(size_t size);
-static void  _1l_bm_free(void *ptr, size_t size);
+void *_1l_bm_allocate(size_t size);
+void  _1l_bm_free(void *ptr, size_t size);

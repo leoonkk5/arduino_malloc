@@ -29,7 +29,8 @@ static uint8_t bitmap[BITMAP_SIZE];
 static inline size_t _find_small_free_index(size_t nblocks, size_t byte_idx, uint8_t b) 
 {
     size_t shift = 1;
-    size_t rem   = nblocks - 1;
+    size_t rem   = nblocks;
+    b = ~b; // Look for sequences of ones, not zeroes.
 
     /*  
      * Bit-hack to find a contiguous sequence of `nblocks` free bits within the byte
@@ -39,7 +40,7 @@ static inline size_t _find_small_free_index(size_t nblocks, size_t byte_idx, uin
      */
     while(rem > 0) 
     {  
-        size_t s = (shift > rem) ? shift : rem;
+        size_t s = (shift > rem) ? rem : shift;
         b &= (b >> s);
         rem -= s;
         shift *= 2;
@@ -58,7 +59,7 @@ static inline size_t _find_free_index(size_t nblocks)
 {   
     size_t seq_carry = 0;   // Consecutive free blocks carried from previous bytes
     size_t seq_start = 0;   // Index of the first block in the current candidate sequence.
-    
+
     for(size_t i = 0; i < BITMAP_SIZE; i++) 
     {   
         uint8_t current  = bitmap[i];
@@ -109,6 +110,9 @@ static inline size_t _find_free_index(size_t nblocks)
  */
 static void _set_sequence(size_t idx, size_t count, uint8_t value)
 {
+    if (idx >= BLOCK_COUNT) return;                  // Out-of-bounds, do nothing
+    if (idx + count > BLOCK_COUNT) count = BLOCK_COUNT - idx; // Clamp to heap size
+
     while (count > 0)
     {
         size_t byte_idx     = idx / 8;      // Which byte in the bitmap
@@ -118,7 +122,7 @@ static void _set_sequence(size_t idx, size_t count, uint8_t value)
         if (bits_in_byte > count) bits_in_byte = count;  // Limit to remainding count
 
         // Create a mask for the bits we want to set in this byte
-        uint8_t mask = ((1 << bits_in_byte) - 1) << bit_idx;
+        uint8_t mask = ((1u << bits_in_byte) - 1) << bit_idx;
 
         if (value) {
             bitmap[byte_idx] |= mask;       // Set bits to 1
@@ -133,7 +137,7 @@ static void _set_sequence(size_t idx, size_t count, uint8_t value)
 }
 
 /* Allocate memory of a given size, and mark used. */
-static void *_1l_bm_allocate(size_t size) 
+void *_1l_bm_allocate(size_t size) 
 {
     size_t nblocks = BLOCKS_NEEDED(size);
 
@@ -146,16 +150,16 @@ static void *_1l_bm_allocate(size_t size)
     size_t idx = _find_free_index(nblocks);
 
     // No free sequence found, return NULL.
-    if(idx == (size_t)-1) 
-    {   
-        return NULL;
-    }
+    if (idx == (size_t)-1 || idx + nblocks > BLOCK_COUNT) 
+    {
+    return NULL;  // Heap full or allocation would overflow
+    } 
     _set_sequence(idx, nblocks, 1);     // Mark blocks as allocated.
     return (HEAP_START + idx * BLOCK_SIZE);
 }
 
 /* free an allocation of a given size (mark free). */
-static void _1l_bm_free(void *ptr, size_t size)
+void _1l_bm_free(void *ptr, size_t size)
 {
     size_t nblocks   = BLOCKS_NEEDED(size);
     size_t start_idx = ((uint8_t*)ptr - HEAP_START) / BLOCK_SIZE;

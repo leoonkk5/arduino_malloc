@@ -1,5 +1,5 @@
 #pragma once
-#include "1l_bm_allocator.h"  // one-level bitmap allocator backend
+#include "allocators/1l_bm_allocator.h"  // one-level bitmap allocator backend
 
 /**
  * @file internal_allocator.h

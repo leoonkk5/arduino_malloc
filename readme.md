@@ -23,7 +23,7 @@ Public API (**`malloc`**, **`free`**, **`calloc`**, **`realloc`**.). Adds small 
 **One-level bitmap allocator** backend. Manages a fixed-size heap divided into aligned blocks.
 
 - **`src/core/heap.h`:**
-Defines heap parameters (**`HEAP_SIZE**`, **HEAP_START`**) and abstracts Arduino vs. desktop builds.
+Defines heap parameters (**`HEAP_SIZE`**, **`HEAP_START`**) and abstracts Arduino vs. desktop builds.
 
 - **`core/utils.h`**
 Utility functions used by the backend. (e.g., bit manipulation like **`ctzb`** and **`clzb`**).
@@ -55,7 +55,7 @@ void loop() {
 ## Current Status
 - malloc
 - free
-- calloc (to be implemented)
+- calloc
 - realloc (to be implemented)
 - One-level bitmap allocator backend
 - Additional backends (to be implemented)
