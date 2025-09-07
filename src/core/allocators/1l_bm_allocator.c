@@ -1,7 +1,7 @@
 // 1l_bm_allocator.c
 #include "1l_bm_allocator.h"
-#include "heap.h"
 #include <stdalign.h> // for max_align_t
+#include "../heap.h"
 #include "../utils.h"
 
 #define BLOCK_SIZE  (sizeof(max_align_t))    // aligned to max_align_t
