@@ -4,7 +4,7 @@
 
 typedef struct 
 {
-    size_t allocation_size; // Size of this allocation.
+    size_t allocation_size; 
 }AllocHeader;
 
 /* API: */
