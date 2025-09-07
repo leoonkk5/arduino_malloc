@@ -1,6 +1,5 @@
 # Ignore all Unix executables (common pattern)
 *.out
-*.bin
 *.exe
 *.elf
 
@@ -13,3 +12,5 @@
 
 # ignore Windows dynamic libraries
 *.dll
+
+*.build/

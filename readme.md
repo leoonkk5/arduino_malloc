@@ -5,12 +5,14 @@ This library provides a familiar **`malloc`**, **`free`**, **`calloc`**, and **`
 
 Unlike the default AVR **`malloc`**, this allocator avoids large runtime overheads and makes it easier to experiment with different allocation strategies (e.g., bitmap allocator, pool allocator, guarded allocator).
 
+
 ## Features
 - Drop-in replacement for **`malloc`**, **`free`**, **`calloc`**, and **`realloc`**.
 - Backend abstraction layer (**`internal_allocator.h`**) for pluggable allocation strategies
 - **Single level bitmap allocator backend** included as the default implementation
 - Minimal overhead — only the selected backend is linked into your binary
 - Portable: works on Arduino boards and can also be tested on desktop environments
+
 
 ## Project Structure
 
@@ -27,6 +29,7 @@ Defines heap parameters (**`HEAP_SIZE`**, **`HEAP_START`**) and abstracts Arduin
 
 - **`core/utils.h`**
 Utility functions used by the backend. (e.g., bit manipulation like **`ctzb`** and **`clzb`**).
+
 
 ## Getting Started
 ### 1. Include the allocator
@@ -60,14 +63,15 @@ void loop() {
 - One-level bitmap allocator backend
 - Additional backends (to be implemented)
 
-## Testing on Desktop
 
+## Testing on Desktop
 For easier debugging, the allocator can be built in a desktop environment by providing a static heap array:
 ```cpp
 uint8_t heap[HEAP_SIZE];
 ```
 
 This allows unit testing without uploading to Arduino hardware.
+
 
 ### Example Output (Uno, 512B heap):
 ```cpp
@@ -76,6 +80,54 @@ void *ptr2 = malloc(64)  -> success
 free(ptr1)               -> freed
 void *ptr3 = malloc(512) -> fails (not enough blocks)
 ```
-📜 License
 
-MIT License. See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+We welcome contributions of all kinds! Whether it’s fixing bugs, adding new allocator backends, improving tests, or enhancing documentation, you’re encouraged to participate.
+
+
+### How to Contribute
+
+**1: Fork the repository** and create a feature branch:
+```bash
+git checkout -b my-feature
+```
+
+**2: Make your changes**
+
+- For code changes, follow the existing project structure.
+
+- Write unit tests for any new features or bug fixes.
+
+- Ensure your code compiles cleanly on both desktop and Arduino (if applicable).
+
+**3: Run tests on desktop:**
+Add any new source files to the Makefile if needed, then run:
+```bash
+make run
+```
+
+**4: Commit your changes with a clear message:**
+```bash
+git commit -am "Add new pool allocator backend"
+```
+
+**5: Push to your fork:**
+```bash
+git push origin my-feature
+```
+
+**6: Open a Pull Request**
+Describe your changes clearly and reference any relevant issues.
+
+### Guidelines
+
+- Follow existing code style and conventions.
+- Keep functions small, modular, and well-documented.
+- Use meaningful commit messages.
+- Ensure all unit tests pass before submitting.
+
+
+## MIT License
+See [LICENSE](LICENSE) for details.
