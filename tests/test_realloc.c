@@ -10,11 +10,13 @@
 static uint8_t heap_data[HEAP_SIZE];
 uint8_t *heap = heap_data;  
 
-static void setUp(void) {
+static void setUp(void) 
+{
     memset(heap_data, 0, HEAP_SIZE);
 }
 
-void test_realloc_basic(void) {
+void test_realloc_basic(void) 
+{
     setUp();
 
     // Allocate initial block
@@ -23,7 +25,8 @@ void test_realloc_basic(void) {
     ASSERT_TRUE(ptr != NULL);
 
     // Fill it with a recognizable pattern
-    for (size_t i = 0; i < initial_size; i++) {
+    for (size_t i = 0; i < initial_size; i++) 
+    {
         ptr[i] = (uint8_t)(i + 1);
     }
 
@@ -33,12 +36,14 @@ void test_realloc_basic(void) {
     ASSERT_TRUE(ptr != NULL);
 
     // Check that old data is preserved
-    for (size_t i = 0; i < initial_size; i++) {
+    for (size_t i = 0; i < initial_size; i++) 
+    {
         ASSERT_EQUAL(ptr[i], (uint8_t)(i + 1));
     }
 
     // Fill the rest
-    for (size_t i = initial_size; i < new_size; i++) {
+    for (size_t i = initial_size; i < new_size; i++) 
+    {
         ptr[i] = (uint8_t)(i + 1);
     }
 
@@ -48,7 +53,8 @@ void test_realloc_basic(void) {
     ASSERT_TRUE(ptr != NULL);
 
     // Old data should still be there up to shrink_size
-    for (size_t i = 0; i < shrink_size; i++) {
+    for (size_t i = 0; i < shrink_size; i++) 
+    {
         ASSERT_EQUAL(ptr[i], (uint8_t)(i + 1));
     }
 
@@ -57,7 +63,8 @@ void test_realloc_basic(void) {
     // Realloc NULL should behave like malloc
     ptr = (uint8_t*)ar_realloc(NULL, 16);
     ASSERT_TRUE(ptr != NULL);
-    for (size_t i = 0; i < 16; i++) {
+    for (size_t i = 0; i < 16; i++) 
+    {
         ptr[i] = 0xAA; // make sure we can write
     }
     ar_free(ptr);
@@ -72,7 +79,8 @@ void test_realloc_basic(void) {
     TEST_PASS("realloc");
 }
 
-int main(void) {
+int main(void) 
+{
     printf("=== Running realloc test ===\n");
     test_realloc_basic();
     printf("All tests passed!\n");

@@ -9,11 +9,13 @@
 static uint8_t heap_data[HEAP_SIZE];
 uint8_t *heap = heap_data;
 
-static void setUp(void) {
+static void setUp(void) 
+{
     for (int i = 0; i < HEAP_SIZE; i++) heap_data[i] = 0;
 }
 
-void test_internal_alloc(void) {
+void test_internal_alloc(void) 
+{
     setUp();
 
     void* ptr1 = _internal_allocate(16);
@@ -29,7 +31,8 @@ void test_internal_alloc(void) {
     TEST_PASS("internal allocator");
 }
 
-int main(void) {
+int main(void) 
+{
     printf("=== Running internal allocator test ===\n");
     test_internal_alloc();
     printf("All tests passed!\n");

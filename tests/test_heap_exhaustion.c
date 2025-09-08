@@ -10,11 +10,13 @@ static uint8_t heap_data[HEAP_SIZE];
 uint8_t *heap = heap_data;  // allocator uses this buffer
 
 // Reset the heap before each test
-static void setUp(void) {
+static void setUp(void) 
+{
     for (int i = 0; i < HEAP_SIZE; i++) heap_data[i] = 0;
 }
 
-void test_heap_exhaustion(void) {
+void test_heap_exhaustion(void) 
+{
     setUp();
 
     void* blocks[256];  
@@ -31,11 +33,13 @@ void test_heap_exhaustion(void) {
     ASSERT_TRUE(count > 0); 
 
     // Free all allocated blocks
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) 
+    {
         ar_free(blocks[i]);
     }
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; i++) 
+    {
         void *ptr = ar_malloc(512);
         ASSERT_TRUE(ptr != NULL);
         ar_free(ptr);
@@ -44,7 +48,8 @@ void test_heap_exhaustion(void) {
     TEST_PASS("heap_exhaustion");
 }
 
-int main(void) {
+int main(void) 
+{
     printf("=== Running heap_exhaustion test ===\n");
     test_heap_exhaustion();
     printf("All tests passed!\n");
