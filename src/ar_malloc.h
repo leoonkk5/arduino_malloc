@@ -15,10 +15,11 @@ extern "C" {
  * without the massive memory overhead made by many other allocators.
  *
  * Functions included:
- * - ar_malloc:    allocate memory
- * - ar_free:      free memory allocated by bm_malloc
- * - ar_calloc:    allocate and zero-initialize memory
- * - ar_realloc:   resize previously allocated memory
+ * - ar_get_alloc_size()  Get the size of an allocation returned by ar_malloc
+ * - ar_malloc:           allocate memory
+ * - ar_free:             free memory allocated by ar_malloc
+ * - ar_calloc:           allocate and zero-initialize memory
+ * - ar_realloc:          resize previously allocated memory
  */
 
 

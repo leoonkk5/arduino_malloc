@@ -16,7 +16,7 @@ Unlike the default AVR **`malloc`**, this allocator avoids large runtime overhea
 
 ## Project Structure
 
-- **`src/ arduino_malloc.h` / `arduino_malloc.c`:**
+- **`src/ ar_malloc.h` / `ar_malloc.c`:**
 Public API (**`ar_malloc`**, **`ar_free`**, **`ar_calloc`**, **`ar_realloc`**.). Adds small headers to track allocation sizes.
 
 - **`src/core/internal_allocator.h`:** Dispatch layer that forwards allocation requests to the chosen backend.
@@ -43,7 +43,7 @@ Utility functions used by the backend. (e.g., bit manipulation like **`ctzb`** a
 
 **4:** Include it in your sketch:
 ```cpp
-#include "arduino_malloc.h"
+#include "ar_malloc.h"
 ```
 
 ### Alternative: Manual Installation
@@ -63,7 +63,7 @@ Linux: **`~/Arduino/libraries/`**
 
 **3:** Include it in your sketch:
 ```cpp
-#include "arduino_malloc.h"
+#include "ar_malloc.h"
 ```
 
 
@@ -71,7 +71,7 @@ Linux: **`~/Arduino/libraries/`**
 ## Getting Started
 ### 1. Include the allocator
 ```cpp
-#include "arduino_malloc.h"
+#include "ar_malloc.h"
 ```
 ### 2. Allocate and free memory
 ```cpp
@@ -93,6 +93,7 @@ void loop() {
 
 
 ## Current Status
+- ar_get_alloc_size
 - ar_malloc
 - ar_free
 - ar_calloc

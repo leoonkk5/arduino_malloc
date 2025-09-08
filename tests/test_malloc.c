@@ -1,5 +1,6 @@
+// test_malloc.c
 #include "support/test_utils.h"
-#include "../src/arduino_malloc.h"
+#include "../src/ar_malloc.h"
 
 #include <stdint.h>
 #include <string.h>

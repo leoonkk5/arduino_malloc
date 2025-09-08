@@ -3,7 +3,7 @@ CC      := gcc
 CFLAGS  := -Wall -Wextra -g -O0
 
 # Library source files
-SRC     := src/arduino_malloc.c src/core/allocators/1l_bm_allocator.c
+SRC     := src/ar_malloc.c src/core/allocators/1l_bm_allocator.c
 
 # Test source files (each has its own main)
 TEST_SRC := $(wildcard tests/*.c)

@@ -1,5 +1,5 @@
-// arduino_malloc.c
-#include "arduino_malloc.h"
+// ar_malloc.c
+#include "ar_malloc.h"
 #include "core/internal_allocator.h"
 #include <stddef.h>
 #include <string.h> // For memset.
