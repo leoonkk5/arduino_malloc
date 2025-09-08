@@ -1,10 +1,3 @@
-#pragma once
-#include <stddef.h>
-#include <stdint.h>
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /**
  * @file arduino_malloc.h
  * @brief Lightweight memory allocator for Arduino projects.
@@ -21,17 +14,24 @@ extern "C" {
  * - ar_calloc:           allocate and zero-initialize memory
  * - ar_realloc:          resize previously allocated memory
  */
+#pragma once
+#include <stddef.h>
+#include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
- /**
-  * @brief Returns the size of a given allocation in bytes.
-  * 
-  * @param ptr Pointer to the allocation to size check.
-  * @return Size of the allocation in bytes.
-  * 
-  * @note This function excludes headers and internals, it only returns the number of bytes allocated by the user. 
-  */
-size_t ar_get_alloc_size(void *ptr) ;
+/**
+ * @brief Returns the size of a given allocation in bytes.
+ * 
+ * @param ptr Pointer to the allocation to check.
+ * @return Size of the allocation in bytes (user-requested memory, excluding internal headers).
+ * 
+ * @note This function returns only the number of bytes allocated by the user. Internal headers or bookkeeping data are excluded.
+ * @warning Passing a pointer not returned by ar_malloc, ar_calloc, or ar_realloc results in undefined behavior.
+ */
+size_t ar_get_alloc_size(void *ptr);
 
 
 /**
@@ -57,6 +57,7 @@ void *ar_malloc(size_t size);
  * @code
  * ar_free(buffer);
  * @endcode
+ * @warning Passing a pointer not returned by ar_malloc/ar_calloc/ar_realloc results in undefined behavior.
  */
 void ar_free(void *ptr);
 
@@ -85,6 +86,7 @@ void *ar_calloc(size_t nelems, size_t size);
  * @code
  * buffer = (uint8_t*)ar_realloc(buffer, 2048);
  * @endcode
+ * @warning Passing a pointer not returned by ar_malloc/ar_calloc/ar_realloc results in undefined behavior.
  */
 void *ar_realloc(void *ptr, size_t new_size);
 

@@ -42,7 +42,7 @@ static inline size_t _find_small_free_index(size_t nblocks, size_t byte_idx, uin
      * Bit-hack to find a contiguous sequence of `nblocks` free bits within the byte
      * Note: not sure if this is any faster than looping thru each bit on ARDUINO, 
      * since arduino only supports shift left/shift right by 1 bit.
-     * TODO: Performance test for this VS looping thru bits.s
+     * TODO: Performance test for this impl VS looping bit by bit.
      */
     while(rem > 0) 
     {  
@@ -154,10 +154,8 @@ void *_1l_bm_allocate(size_t size)
     if(idx + nblocks >= BLOCK_COUNT) return NULL;
 
     // No free sequence found, return NULL.
-    if (idx == (size_t)-1 || idx + nblocks > BLOCK_COUNT) 
-    {
-    return NULL;  // Heap full or allocation would overflow
-    } 
+    if (idx == (size_t)-1) return NULL;  
+
     _set_sequence(idx, nblocks, 1);     // Mark blocks as allocated.
     return (HEAP_START + idx * BLOCK_SIZE);
 }

@@ -1,13 +1,10 @@
-#pragma once
-#include "allocators/1l_bm_allocator.h"  // one-level bitmap allocator backend
-
 /**
  * @file internal_allocator.h
  * @brief Dispatch layer for backend memory allocation in Arduino projects.
  *
  * This header provides an abstraction layer for the actual memory allocation
  * implementation. By using `_internal_allocate` and `_internal_free`, the
- * frontend allocator (e.g., `malloc`, `free`) can remain unchanged while
+ * frontend allocator (e.g., `ar_malloc` / `ar_free`) can remain unchanged while
  * using different backend implementations (bitmap, pool, etc.).
  *
  * Currently uses:
@@ -15,6 +12,8 @@
  *
  * Future expansions can switch allocator implementation dynamically.
  */
+#pragma once
+#include "allocators/1l_bm_allocator.h"  // one-level bitmap allocator backend
 
 /**
  * @brief Allocate memory using the current backend allocator.
@@ -22,10 +21,10 @@
  * This function dispatches the request to the selected allocator backend.
  * Currently implemented using the one-level bitmap allocator.
  *
- * @param size Number of bytes to allocate
- * @return Pointer to allocated memory, or NULL if allocation fails
+ * @param size Number of bytes to allocate.
+ * @return Pointer to allocated memory, or NULL if allocation fails.
  *
- * @note This is an internal function; user code should call `malloc` instead.
+ * @note This is an internal function; user code should call `ar_malloc` instead.
  */
 static inline void* _internal_allocate(size_t size)
 {
@@ -38,10 +37,10 @@ static inline void* _internal_allocate(size_t size)
  * This function dispatches the request to the selected allocator backend.
  * Currently implemented using the one-level bitmap allocator.
  *
- * @param ptr Pointer to memory to free
- * @param size Size of the memory block that was allocated
+ * @param ptr Pointer to memory to free.
+ * @param size Size of the memory block that was allocated.
  *
- * @note This is an internal function; user code should call `free` instead.
+ * @note This is an internal function; user code should call `ar_free` instead.
  */
 static inline void _internal_free(void* ptr, size_t size)
 {
