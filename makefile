@@ -1,28 +1,51 @@
-# Makefile for running unit test on the allocator.
-
 # Compiler
 CC      := gcc
 CFLAGS  := -Wall -Wextra -g -O0
 
-# Source files
-SRC     := src/arduino_malloc.c src/core/allocators/1l_bm_allocator.c # add custom backends here
-TEST_SRC := tests/test_allocator.c
+# Library source files
+SRC     := src/arduino_malloc.c src/core/allocators/1l_bm_allocator.c
 
-# Output binary
-OUT := build/test_allocator
+# Test source files (each has its own main)
+TEST_SRC := $(wildcard tests/*.c)
 
-# Build unit test.
-test: $(OUT)
+# Build directory
+BUILD   := build
 
-$(OUT): $(SRC) $(TEST_SRC)
-	mkdir -p build
-	$(CC) $(CFLAGS) -o $@ $^
+# Convert each test .c file into a binary name in build/
+TEST_BIN := $(patsubst tests/%.c,$(BUILD)/%,$(TEST_SRC))
 
-run: $(OUT)
-	./$(OUT)
+# Default target: build all tests
+all: $(TEST_BIN)
 
+# Pattern rule: compile each test file into its own binary
+$(BUILD)/%: tests/%.c
+	mkdir -p $(BUILD)
+	$(CC) $(CFLAGS) -o $@ $(SRC) $<
+
+# Run all tests
+# Run all tests with summary
+run: all
+	@passed=0; failed=0; \
+	for test in $(TEST_BIN); do \
+		echo "Running $$test..."; \
+		./$$test; \
+		if [ $$? -eq 0 ]; then \
+			passed=$$((passed+1)); \
+		else \
+			failed=$$((failed+1)); \
+		fi; \
+		echo ""; \
+	done; \
+	echo "=== Test Summary ==="; \
+	echo "Passed: $$passed"; \
+	echo "Failed: $$failed"; \
+	if [ $$failed -ne 0 ]; then exit 1; fi
+
+
+# Address sanitizer build
 asan: CFLAGS += -fsanitize=address
-asan: clean $(OUT)
+asan: clean all
 
+# Clean build
 clean:
-	rm -f $(OUT) *.o
+	rm -rf $(BUILD)

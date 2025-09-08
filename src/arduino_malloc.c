@@ -9,6 +9,13 @@ typedef struct
     size_t allocation_size; 
 }AllocHeader;
 
+size_t ar_get_alloc_size(void *ptr) 
+{
+    if(!ptr) return 0;
+    AllocHeader *header = ((AllocHeader*)ptr - 1);
+    return header->allocation_size - sizeof(AllocHeader);
+}
+
 void *ar_malloc(size_t size)
 {
     if(size == 0) size = 1;  // Ensure we allocate at least 1 byte
